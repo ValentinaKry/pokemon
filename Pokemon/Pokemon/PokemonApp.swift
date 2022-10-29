@@ -1,10 +1,3 @@
-//
-//  PokemonApp.swift
-//  Pokemon
-//
-//  Created by Valentina Krysak on 29.10.22.
-//
-
 import SwiftUI
 
 @main
