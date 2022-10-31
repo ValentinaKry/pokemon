@@ -11,6 +11,9 @@
 		0D6EDFD7290D1F3F007296AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6EDFD6290D1F3F007296AE /* Assets.xcassets */; };
 		0D6EDFDA290D1F3F007296AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6EDFD9290D1F3F007296AE /* Preview Assets.xcassets */; };
 		0D6EDFE1290D2010007296AE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6EDFE0290D2010007296AE /* ContentView.swift */; };
+		0D90FCB8290FCA9D008EA8BD /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90FCB7290FCA9D008EA8BD /* NetworkManager.swift */; };
+		0D90FCBA290FCB55008EA8BD /* PockemonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90FCB9290FCB55008EA8BD /* PockemonResponse.swift */; };
+		0D90FCBC290FEFC4008EA8BD /* PockemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90FCBB290FEFC4008EA8BD /* PockemonViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		0D6EDFD6290D1F3F007296AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D6EDFD9290D1F3F007296AE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0D6EDFE0290D2010007296AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0D90FCB7290FCA9D008EA8BD /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		0D90FCB9290FCB55008EA8BD /* PockemonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PockemonResponse.swift; sourceTree = "<group>"; };
+		0D90FCBB290FEFC4008EA8BD /* PockemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PockemonViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +57,11 @@
 		0D6EDFD1290D1F3E007296AE /* Pokemon */ = {
 			isa = PBXGroup;
 			children = (
+				0D90FCB6290FC51C008EA8BD /* Networking */,
+				0D90FCB5290FC513008EA8BD /* ViewModel */,
+				0D90FCB4290FC50E008EA8BD /* Model */,
+				0D90FCB3290FC4DF008EA8BD /* View */,
 				0D6EDFD2290D1F3E007296AE /* PokemonApp.swift */,
-				0D6EDFE0290D2010007296AE /* ContentView.swift */,
 				0D6EDFD6290D1F3F007296AE /* Assets.xcassets */,
 				0D6EDFD8290D1F3F007296AE /* Preview Content */,
 			);
@@ -65,6 +74,38 @@
 				0D6EDFD9290D1F3F007296AE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0D90FCB3290FC4DF008EA8BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0D6EDFE0290D2010007296AE /* ContentView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0D90FCB4290FC50E008EA8BD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D90FCB9290FCB55008EA8BD /* PockemonResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D90FCB5290FC513008EA8BD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0D90FCBB290FEFC4008EA8BD /* PockemonViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0D90FCB6290FC51C008EA8BD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0D90FCB7290FCA9D008EA8BD /* NetworkManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +178,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D90FCB8290FCA9D008EA8BD /* NetworkManager.swift in Sources */,
+				0D90FCBA290FCB55008EA8BD /* PockemonResponse.swift in Sources */,
+				0D90FCBC290FEFC4008EA8BD /* PockemonViewModel.swift in Sources */,
 				0D6EDFE1290D2010007296AE /* ContentView.swift in Sources */,
 				0D6EDFD3290D1F3E007296AE /* PokemonApp.swift in Sources */,
 			);

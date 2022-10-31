@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @StateObject var vm = PockemonViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView{
+            List {
+                ForEach(vm.result, id: \.self) { item in
+                    VStack {
+                        // Make Capitalization!
+                        Text(item.name)
+                            .font(.title2)
+                            .textInputAutocapitalization(.characters)
+                    }
+                }
+            }
+            .navigationTitle("Pockemon")
+
         }
-        .padding()
     }
 }
 
