@@ -1,27 +1,34 @@
 import SwiftUI
 
 struct ContentView: View {
-
     @StateObject var vm = PokemonViewModel()
+    private var arrayPokemon = ["Bulb"]
+    @State var searchText = ""
 
     var body: some View {
         NavigationView{
             VStack {
-                NavigationLink {
-                    DetailPokemon()
-                } label: {
-                    List {
-                        ForEach(vm.result, id: \.self) { item in
-                            VStack {
-                                    // Make Capitalization!
-                                Text(item.name)
-                                    .font(.title2)
-                                    .textInputAutocapitalization(.characters)
-                            }
+                List {
+                    ForEach(Array(vm.result.enumerated()), id: \.offset) { index, item in
+
+                        NavigationLink {
+
+                            DetailPokemon()
+                        } label: {
+                                // Text("\(index)")
+                            Text(item.name.capitalizingFirstLetter())
+                                .font(.title2)
+                                .textInputAutocapitalization(.characters)
+                        }
+                        .onTapGesture {
+                            vm.index = index
+                            print(vm.index)
                         }
                     }
                 }
                 .navigationTitle("Pokemon")
+                .toolbarBackground(Color("Bg"), for: .navigationBar)
+                .listStyle(.plain)
 
                 HStack {
                     Button {
@@ -29,15 +36,28 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                     }
+                    .frame(width: 40, height: 40)
+                    .background(Color("Bg"))
+                    .clipShape(Circle())
+                    .padding(.horizontal)
                     Button {
-                        vm.getPosts()
+                        
                     } label: {
                         Image(systemName: "chevron.right")
+
                     }
+                    .frame(width: 40, height: 40)
+                    .background(Color("Bg"))
+                    .clipShape(Circle())
+                    .padding(.horizontal)
                 }
-              //  .padding()
+
+                .fontWeight(.bold)
+                .padding(.top, 5)
+
             }
         }
+        .accentColor(.white)
     }
 }
 

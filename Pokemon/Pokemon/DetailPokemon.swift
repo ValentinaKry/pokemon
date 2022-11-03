@@ -9,6 +9,8 @@ struct DetailPokemon: View {
             Image("Bg")
                 .resizable()
                 .ignoresSafeArea(.all)
+            Color.black.opacity(0.2)
+                .ignoresSafeArea(.all)
             VStack {
                 Spacer()
                 VStack(alignment: .center) {
@@ -17,6 +19,9 @@ struct DetailPokemon: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
+                    Text("Types")
+                        .offset(y: 25)
+                        .padding(.top, -20)
                     HStack {
                         VStack {
                             Text("8.44 kg")
