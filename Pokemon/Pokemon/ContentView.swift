@@ -2,22 +2,41 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @StateObject var vm = PockemonViewModel()
+    @StateObject var vm = PokemonViewModel()
 
     var body: some View {
         NavigationView{
-            List {
-                ForEach(vm.result, id: \.self) { item in
-                    VStack {
-                        // Make Capitalization!
-                        Text(item.name)
-                            .font(.title2)
-                            .textInputAutocapitalization(.characters)
+            VStack {
+                NavigationLink {
+                    DetailPokemon()
+                } label: {
+                    List {
+                        ForEach(vm.result, id: \.self) { item in
+                            VStack {
+                                    // Make Capitalization!
+                                Text(item.name)
+                                    .font(.title2)
+                                    .textInputAutocapitalization(.characters)
+                            }
+                        }
                     }
                 }
-            }
-            .navigationTitle("Pockemon")
+                .navigationTitle("Pokemon")
 
+                HStack {
+                    Button {
+
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    Button {
+                        vm.getPosts()
+                    } label: {
+                        Image(systemName: "chevron.right")
+                    }
+                }
+              //  .padding()
+            }
         }
     }
 }

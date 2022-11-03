@@ -1,16 +1,16 @@
 import Foundation
 
     // MARK: - PockmonModel
-    struct PockemonResponse: Codable {
+    struct PokemonResponse: Codable {
         let count: Int
         let next: String
         let previous: JSONNull?
-        let results: [PockemonData]
+        let results: [PokemonData]
     
     }
 
     // MARK: - Result
-    struct PockemonData: Codable, Hashable{
+    struct PokemonData: Codable, Hashable{
         let name: String
         let url: String
     }

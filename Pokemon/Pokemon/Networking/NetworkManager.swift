@@ -1,7 +1,7 @@
 import Foundation
 
 class Api {
-    func getPost(completion: @escaping ([PockemonResponse]) -> ()) {
+    func getPost(completion: @escaping ([PokemonResponse]) -> ()) {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon") else {
             print("hey man THIS URL DOES NOT WORK")
             return
@@ -18,7 +18,7 @@ class Api {
                 print(dataString!)
             }
 
-            let posts = try! JSONDecoder().decode([PockemonResponse].self, from: data!)
+            let posts = try! JSONDecoder().decode([PokemonResponse].self, from: data!)
             DispatchQueue.main.async {
                 completion(posts)
                 print("I.m here")
