@@ -1,29 +1,36 @@
 import Foundation
 
-class Api {
-    func getPost(completion: @escaping ([PokemonResponse]) -> ()) {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon") else {
-            print("hey man THIS URL DOES NOT WORK")
-            return
-        }
+class NetworkManager: ObservableObject {
+    
+    func loadData<T: Codable>(url: String, compitionHandler: @escaping (T) -> Void) {
+        guard let url = URL(string: url) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-
-            if error != nil {
-                print(error!)
+            guard let data = data else {
+                print("No data")
                 return
             }
-            if let safeData = data {
-                let dataString = String(data: safeData, encoding: .utf8)
-                print(dataString!)
+            guard error == nil else{
+                print("Error: \(String(describing: error))")
+                return
             }
 
-            let posts = try! JSONDecoder().decode([PokemonResponse].self, from: data!)
+            guard let response = response as? HTTPURLResponse else {
+                print("Invalid response.")
+                return
+            }
+
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Status code should be 2xx, but  is \(response.statusCode)")
+                return
+            }
+
+            guard let newPockemon = try? JSONDecoder().decode(T.self, from: data) else {return}
             DispatchQueue.main.async {
-                completion(posts)
-                print("I.m here")
+                compitionHandler(newPockemon)
             }
         }
         .resume()
     }
+
 }
