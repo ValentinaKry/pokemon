@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var vm = PokemonViewModel()
+    @EnvironmentObject var launchSreenManager: LaunchScreenManager
     private var arrayPokemon = ["Bulb"]
     @State var searchText = ""
 
@@ -58,12 +59,21 @@ struct ContentView: View {
             }
         }
         .accentColor(.white)
+        .onAppear {
+            DispatchQueue
+                .main
+                .asyncAfter(deadline: .now() + 5) {
+                    launchSreenManager.dismiss()
+                }
+        }
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(LaunchScreenManager())
     }
 }
 

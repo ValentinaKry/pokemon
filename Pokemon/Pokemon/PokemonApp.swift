@@ -2,9 +2,17 @@ import SwiftUI
 
 @main
 struct PokemonApp: App {
+    @StateObject var launchScreenManager = LaunchScreenManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                ContentView()
+
+                if launchScreenManager.state != .completed {
+                    LaunchScreen()
+                }
+            }
+            .environmentObject(launchScreenManager)
         }
     }
 }
