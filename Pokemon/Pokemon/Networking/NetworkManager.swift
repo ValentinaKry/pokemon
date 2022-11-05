@@ -1,36 +1,34 @@
 import Foundation
 
-class NetworkManager: ObservableObject {
+protocol DataSourceManagerProtocol {
+    func loadData<T: Codable>(page: Int, compitionHandler: @escaping (T) -> Void, errorHandler: @escaping (String) -> Void)
+}
+
+class NetworkManager: DataSourceManagerProtocol {
     
-    func loadData<T: Codable>(url: String, compitionHandler: @escaping (T) -> Void) {
-        guard let url = URL(string: url) else { return }
+    func loadData<T: Codable>(page: Int, compitionHandler: @escaping (T) -> Void, errorHandler: @escaping (String) -> Void) {
+        let offset = page * 20
+        let urlString = "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=20"
+        guard let url = URL(string: urlString) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data")
-                return
-            }
-            guard error == nil else{
-                print("Error: \(String(describing: error))")
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
+            guard let data = data,
+            error == nil,
+            let response = response as? HTTPURLResponse,
+            response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Error dowloading data.")
                 return
             }
 
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but  is \(response.statusCode)")
+            guard let newPockemon = try? JSONDecoder().decode(T.self, from: data) else {
+                errorHandler("Encoding error")
                 return
-            }
 
-            guard let newPockemon = try? JSONDecoder().decode(T.self, from: data) else {return}
+            }
             DispatchQueue.main.async {
                 compitionHandler(newPockemon)
             }
         }
         .resume()
     }
-
 }

@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var vm = PokemonViewModel()
+    @StateObject var vm = PokemonsListViewModel(networkManager: NetworkManager() )
     @EnvironmentObject var launchSreenManager: LaunchScreenManager
-    private var arrayPokemon = ["Bulb"]
-    @State var searchText = ""
 
     var body: some View {
         NavigationView{
@@ -13,17 +11,11 @@ struct ContentView: View {
                     ForEach(Array(vm.result.enumerated()), id: \.offset) { index, item in
 
                         NavigationLink {
-
                             DetailPokemon()
                         } label: {
-                                // Text("\(index)")
-                            Text(item.name.capitalizingFirstLetter())
+                            Text(item.name)
                                 .font(.title2)
                                 .textInputAutocapitalization(.characters)
-                        }
-                        .onTapGesture {
-                            vm.index = index
-                            print(vm.index)
                         }
                     }
                 }
@@ -33,7 +25,7 @@ struct ContentView: View {
 
                 HStack {
                     Button {
-
+                        vm.loadPreviousPokemonsPage()
                     } label: {
                         Image(systemName: "chevron.left")
                     }
@@ -42,7 +34,7 @@ struct ContentView: View {
                     .clipShape(Circle())
                     .padding(.horizontal)
                     Button {
-                        
+                        vm.loadNextPokemonsPage()
                     } label: {
                         Image(systemName: "chevron.right")
 
@@ -67,7 +59,6 @@ struct ContentView: View {
                 }
         }
     }
-
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -1,35 +1,61 @@
 import Foundation
 import SwiftUI
 
-class PokemonViewModel: ObservableObject {
+struct PokemonViewModel {
+    let name: String
+    let url: URL?
 
-    @Published var pockemons: [PokemonResponse] = []
-    @Published var result: [PokemonData] = []
-    @Published var arrayURL: [String] = []
-    @Published var index: Int = 0
-    @Published var url: String = "https://pokeapi.co/api/v2/pokemon"
-    @ObservedObject var networkManager = NetworkManager()
-
-    init () {
-        networkManager.loadData(url: url, compitionHandler: { [weak self] item in
-            self?.pockemons.append(item)
-            for item in self?.pockemons ?? [] {
-                self?.result = item.results
-            }
-            for url in self?.result ?? [] {
-                self?.arrayURL.append(url.url)
-            }
-        })
+    init(from model: PokemonsListModel.PokemonModel) {
+        self.name = model.name.capitalizingFirstLetter()
+        if let url = URL(string: model.url) {
+            self.url = url
+        } else {
+            self.url = nil
+        }
     }
 }
 
-extension String {
-    func capitalizingFirstLetter() -> String {
-      return prefix(1).uppercased() + self.lowercased().dropFirst()
+class PokemonsListViewModel: ObservableObject {
+
+        @Published var result: [PokemonViewModel] = []
+        var networkManager: DataSourceManagerProtocol
+        var currentPage = 0
+
+        init (networkManager: DataSourceManagerProtocol) {
+            self.networkManager = networkManager
+            loadPokemons()
+        }
+
+        private func loadPokemons() {
+            networkManager.loadData(page: currentPage, compitionHandler: { [weak self] (item: PokemonsListModel) in
+                self?.result = item.results.map { model in
+                    PokemonViewModel(from: model)
+                }
+            }, errorHandler: { erroMessage in
+                print(erroMessage)
+            })
+        }
+
+        func loadNextPokemonsPage() {
+            currentPage += 1
+            loadPokemons()
+        }
+
+        func loadPreviousPokemonsPage() {
+            guard currentPage > 0 else { return }
+            currentPage -= 1
+            loadPokemons()
+        }
     }
 
-    mutating func capitalizeFirstLetter() {
-      self = self.capitalizingFirstLetter()
+
+    extension String {
+        func capitalizingFirstLetter() -> String {
+            return prefix(1).uppercased() + self.lowercased().dropFirst()
+        }
+
+        mutating func capitalizeFirstLetter() {
+            self = self.capitalizingFirstLetter()
+        }
     }
-}
 

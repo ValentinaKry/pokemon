@@ -2,7 +2,7 @@ import SwiftUI
 
 struct DetailPokemon: View {
 
-    @StateObject var vm = PokemonViewModel()
+   // @StateObject var vm = PokemonViewModel()
 
     var body: some View {
         ZStack {
