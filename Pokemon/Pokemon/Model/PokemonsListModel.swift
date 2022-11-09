@@ -10,7 +10,3 @@ import Foundation
         let results: [PokemonModel]
     
     }
-
-    // MARK: - Result
-
-

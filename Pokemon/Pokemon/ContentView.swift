@@ -37,7 +37,6 @@ struct ContentView: View {
                         vm.loadNextPokemonsPage()
                     } label: {
                         Image(systemName: "chevron.right")
-
                     }
                     .frame(width: 40, height: 40)
                     .background(Color("Bg"))
@@ -50,11 +49,14 @@ struct ContentView: View {
 
             }
         }
+        .alert(item: $vm.appError) { appError in
+            Alert(title: Text("Oh Oh"), message: Text(appError.error.localizedDescription))
+        }
         .accentColor(.white)
         .onAppear {
             DispatchQueue
                 .main
-                .asyncAfter(deadline: .now() + 5) {
+                .asyncAfter(deadline: .now() + 1.2) {
                     launchSreenManager.dismiss()
                 }
         }
