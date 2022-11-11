@@ -5,11 +5,14 @@ protocol DataSourceManagerProtocol {
 }
 
 class NetworkManager: DataSourceManagerProtocol {
-    
+
     func loadData<T: Codable>(page: Int, compitionHandler: @escaping (T) -> Void, errorHandler: @escaping (NetworkError) -> Void) {
         let offset = page * 20
-        let urlString = "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=20"
-        guard let url = URL(string: urlString) else { return }
+        let baseURL =  BaseURL.authorization.rawValue
+        guard let url = URL(string: baseURL + String(offset) + Path.endPoint.rawValue) else {
+            errorHandler(.badRequest)
+            return
+        }
 
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data,
@@ -31,4 +34,14 @@ class NetworkManager: DataSourceManagerProtocol {
         }
         .resume()
     }
+
+//    func getDetailedPokemon(id: Int, _ completion:@escaping (DetailModel) -> ()) {
+//        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: DetailModel.self) { data in
+//            completion(data)
+//            print(data)
+//
+//        } failure: { error in
+//            print(error)
+//        }
+//    }
 }

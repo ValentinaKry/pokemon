@@ -11,9 +11,9 @@ struct ContentView: View {
                     ForEach(Array(vm.result.enumerated()), id: \.offset) { index, item in
 
                         NavigationLink {
-                            DetailPokemon()
+                            DetailPokemon(url: item.url)
                         } label: {
-                            Text(item.name)
+                            Text(item.name.capitalized)
                                 .font(.title2)
                                 .textInputAutocapitalization(.characters)
                         }

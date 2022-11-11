@@ -2,8 +2,8 @@ import SwiftUI
 
 struct DetailPokemon: View {
 
-   // @StateObject var vm = PokemonViewModel()
-
+    @State private var isLoading = false
+    let url: URL?
     var body: some View {
         ZStack {
             Image("Bg")
@@ -52,12 +52,37 @@ struct DetailPokemon: View {
                     .edgesIgnoringSafeArea(.top)
             }
 
+            if isLoading {
+                LoadingView()
+            }
+        }
+        .onAppear {startFakeNetworkCall()}
+    }
+
+    func startFakeNetworkCall() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            isLoading = false
         }
     }
 }
 
 struct DetailPokemon_Previews: PreviewProvider {
     static var previews: some View {
-        DetailPokemon()
+        DetailPokemon(url: nil)
+            .environmentObject(DetailViewModel())
+    }
+}
+
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            Image("Bg")
+                .resizable()
+                .ignoresSafeArea(.all)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
+                .scaleEffect(3)
+        }
     }
 }

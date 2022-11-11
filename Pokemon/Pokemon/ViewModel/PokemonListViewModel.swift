@@ -6,7 +6,7 @@ struct PokemonViewModel {
     let url: URL?
 
     init(from model: PokemonsListModel.PokemonModel) {
-        self.name = model.name.capitalizingFirstLetter()
+        self.name = model.name
         if let url = URL(string: model.url) {
             self.url = url
         } else {
