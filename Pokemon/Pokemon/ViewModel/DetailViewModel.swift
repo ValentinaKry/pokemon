@@ -30,8 +30,6 @@ final class DetailViewModel: ObservableObject {
         getDetails()
         setupBindings()
     }
-
-
 }
 
 private extension DetailViewModel {
@@ -63,7 +61,6 @@ private extension DetailViewModel {
                 self.imageURL = detail.pokemonImage
             }
             .store(in: &cancellables)
-
     }
 
     func formatHW(value: Int) -> String {

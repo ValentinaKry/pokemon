@@ -1,10 +1,8 @@
-
 import Foundation
 
-struct DetailModel: Codable, Identifiable {
-    var id = UUID()
+struct DetailModel: Codable {
     let name : String
-    let sprites : Other
+    let sprites : Front
     let height : Int
     let weight : Int
     let types : [Types]
@@ -17,22 +15,19 @@ struct DetailModel: Codable, Identifiable {
         }
     }
 
-    struct Other: Codable {
-        let home: Front
-            //MARK: Pokemon's image
-        struct Front: Codable {
-            let frontDefault: URL
+    //MARK: Pokemon's image
+    struct Front: Codable {
+        let frontDefault: URL
 
-            enum CodingKeys: String, CodingKey {
-                case frontDefault = "front_default"
-            }
+        enum CodingKeys: String, CodingKey {
+            case frontDefault = "front_default"
         }
     }
 
     var pokemonType: String {
-        return "Types: \(types.map{$0.type.name}.joined(separator: ", "))"
+        "Types: \(types.map{$0.type.name}.joined(separator: ", "))"
     }
     var pokemonImage: URL {
-        return sprites.home.frontDefault
+        sprites.frontDefault
     }
 }
