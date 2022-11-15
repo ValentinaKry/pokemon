@@ -3,7 +3,7 @@ import SwiftUI
 
 class PokemonsListViewModel: ObservableObject {
 
-    @Published var result: [PokemonViewModel] = []
+    @Published var result: [PokemonPresentationModel] = []
     @Published var appError: ErrorType? = nil
     var networkManager: DataSourceManagerProtocol
     var currentPage = 0
@@ -14,12 +14,15 @@ class PokemonsListViewModel: ObservableObject {
     }
 
     private func loadPokemons() {
-        networkManager.loadData(page: currentPage, completionHandler: { [weak self] (item: PokemonsListModel) in self?.result = item.results.map { model in
-                PokemonViewModel(from: model)
+        networkManager.loadData(
+            page: currentPage,
+            completionHandler: { [weak self] (item: PokemonsListModel) in self?.result = item.results.map { model in
+                PokemonPresentationModel(from: model)
             }
-        }, errorHandler: { errorMessage in
-            self.appError = ErrorType(error: .downloadError)
-        })
+            }, errorHandler: { errorMessage in
+                self.appError = ErrorType(error: .downloadError)
+            }
+        )
     }
 
     func loadNextPokemonsPage() {
@@ -33,4 +36,3 @@ class PokemonsListViewModel: ObservableObject {
         loadPokemons()
     }
 }
-

@@ -6,6 +6,3 @@ enum BaseURL: String {
 enum Path : String {
     case endPoint = "&limit=20"
 }
-
-
-//"https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=20"

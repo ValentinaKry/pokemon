@@ -21,14 +21,18 @@ struct DetailModel: Codable, Identifiable {
         let home: Front
             //MARK: Pokemon's image
         struct Front: Codable {
-            let front_default: String
+            let frontDefault: URL
+
+            enum CodingKeys: String, CodingKey {
+                case frontDefault = "front_default"
+            }
         }
     }
 
     var pokemonType: String {
         return "Types: \(types.map{$0.type.name}.joined(separator: ", "))"
     }
-    var pokemonImage: String {
-        return sprites.home.front_default
+    var pokemonImage: URL {
+        return sprites.home.frontDefault
     }
 }

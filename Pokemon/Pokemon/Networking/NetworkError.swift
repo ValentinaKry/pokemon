@@ -16,7 +16,7 @@ enum NetworkError: Error, LocalizedError {
     }
 }
 
-struct ErrorType: Identifiable {
+struct ErrorType: Error, Identifiable {
     let id = UUID()
     let error: NetworkError
 }

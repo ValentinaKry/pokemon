@@ -13,24 +13,24 @@ struct DetailPokemon: View {
             VStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    Text("Hello \n I'm \(viewModel.pokemonDetail?.name ?? "")")
+                    Text("Hello \n I'm \(viewModel.name)")
                         .padding()
                         .font(.title)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
-                    Text(viewModel.pokemonDetail?.pokemonType ?? "")
+                    Text(viewModel.type)
                         .offset(y: 25)
                         .padding(.top, -20)
                     HStack {
                         VStack {
-                            Text("\(viewModel.formatHW(value: viewModel.pokemonDetail?.weight ?? 0)) kg")
+                            Text("\(viewModel.weight) kg")
                                 .fontWeight(.bold)
                             Text("weight")
                         }
                         .padding(.horizontal)
                         Spacer()
                         VStack {
-                            Text("\(viewModel.formatHW(value: viewModel.pokemonDetail?.height ?? 0)) m")
+                            Text("\(viewModel.height) m")
                                 .fontWeight(.bold)
                             Text("height")
                         }
@@ -44,35 +44,28 @@ struct DetailPokemon: View {
                 .padding()
                 .shadow(radius: 5)
                 Spacer()
-                Image("1")
-                    .resizable()
-                    .aspectRatio( contentMode: .fit)
-                    .frame(width: 250, height: 250)
-                    .edgesIgnoringSafeArea(.top)
+                AsyncImage(url: viewModel.imageURL) { image in
+                    image
+                        .resizable()
+                        .aspectRatio( contentMode: .fit)
+                        .frame(width: 250, height: 250)
+                        .edgesIgnoringSafeArea(.top)
+                } placeholder: {
+                    ProgressView()
+
+                }
             }
-
-//            if isLoading {
-//                LoadingView()
-//            }
         }
-//        .onAppear {
-//            startFakeNetworkCall()
-//
-//        }
     }
-
-//    func startFakeNetworkCall() {
-//        isLoading = true
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-//            isLoading = false
-//        }
-//    }
 }
 
 struct DetailPokemon_Previews: PreviewProvider {
     @State static var url: URL? = nil
     static var previews: some View {
-        DetailPokemon(viewModel: DetailViewModel(pokemonManager: NetworkManager()))
+        DetailPokemon(
+            viewModel: DetailViewModel(
+                url: URL(string: "")!,
+                pokemonManager: NetworkManager()))
     }
 }
 

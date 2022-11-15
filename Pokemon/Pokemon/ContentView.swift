@@ -9,13 +9,16 @@ struct ContentView: View {
             VStack {
                 List {
                     ForEach(Array(vm.result.enumerated()), id: \.offset) { index, item in
+                        if let url = item.url {
                         NavigationLink {
-
-                            DetailPokemon(viewModel: DetailViewModel(url: item.url, pokemonManager: NetworkManager()))
-                        } label: {
-                            Text(item.name.capitalized)
-                                .font(.title2)
-                                .textInputAutocapitalization(.characters)
+                                DetailPokemon(viewModel: DetailViewModel(
+                                    url: url,
+                                    pokemonManager: NetworkManager()))
+                            } label: {
+                                Text(item.name.capitalized)
+                                    .font(.title2)
+                                    .textInputAutocapitalization(.characters)
+                            }
                         }
                     }
                 }
