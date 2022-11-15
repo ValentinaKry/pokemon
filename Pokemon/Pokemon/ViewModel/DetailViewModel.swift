@@ -59,6 +59,7 @@ private extension DetailViewModel {
                 self.height = self.formatHW(value: detail.height)
                 self.weight = self.formatHW(value: detail.weight)
                 self.imageURL = detail.pokemonImage
+                self.type = detail.pokemonType
             }
             .store(in: &cancellables)
     }

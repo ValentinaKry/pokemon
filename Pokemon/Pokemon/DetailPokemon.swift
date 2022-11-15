@@ -13,7 +13,7 @@ struct DetailPokemon: View {
             VStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    Text("Hello \n I'm \(viewModel.name)")
+                    Text("Hello \n I'm \(viewModel.name.capitalized)")
                         .padding()
                         .font(.title)
                         .fontWeight(.bold)
