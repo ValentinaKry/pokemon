@@ -1,9 +1,8 @@
 import SwiftUI
 
 struct DetailPokemon: View {
+    @ObservedObject var viewModel: DetailViewModel
 
-    @State private var isLoading = false
-    let url: URL?
     var body: some View {
         ZStack {
             Image("Bg")
@@ -14,24 +13,24 @@ struct DetailPokemon: View {
             VStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    Text("Hello \n I'm Bulbasaur")
+                    Text("Hello \n I'm \(viewModel.pokemonDetail?.name ?? "")")
                         .padding()
                         .font(.title)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
-                    Text("Types")
+                    Text(viewModel.pokemonDetail?.pokemonType ?? "")
                         .offset(y: 25)
                         .padding(.top, -20)
                     HStack {
                         VStack {
-                            Text("8.44 kg")
+                            Text("\(viewModel.formatHW(value: viewModel.pokemonDetail?.weight ?? 0)) kg")
                                 .fontWeight(.bold)
                             Text("weight")
                         }
                         .padding(.horizontal)
                         Spacer()
                         VStack {
-                            Text("0.33 m")
+                            Text("\(viewModel.formatHW(value: viewModel.pokemonDetail?.height ?? 0)) m")
                                 .fontWeight(.bold)
                             Text("height")
                         }
@@ -52,25 +51,28 @@ struct DetailPokemon: View {
                     .edgesIgnoringSafeArea(.top)
             }
 
-            if isLoading {
-                LoadingView()
-            }
+//            if isLoading {
+//                LoadingView()
+//            }
         }
-        .onAppear {startFakeNetworkCall()}
+//        .onAppear {
+//            startFakeNetworkCall()
+//
+//        }
     }
 
-    func startFakeNetworkCall() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            isLoading = false
-        }
-    }
+//    func startFakeNetworkCall() {
+//        isLoading = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+//            isLoading = false
+//        }
+//    }
 }
 
 struct DetailPokemon_Previews: PreviewProvider {
+    @State static var url: URL? = nil
     static var previews: some View {
-        DetailPokemon(url: nil)
-            .environmentObject(DetailViewModel())
+        DetailPokemon(viewModel: DetailViewModel(pokemonManager: NetworkManager()))
     }
 }
 

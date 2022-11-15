@@ -9,9 +9,9 @@ struct ContentView: View {
             VStack {
                 List {
                     ForEach(Array(vm.result.enumerated()), id: \.offset) { index, item in
-
                         NavigationLink {
-                            DetailPokemon(url: item.url)
+
+                            DetailPokemon(viewModel: DetailViewModel(url: item.url, pokemonManager: NetworkManager()))
                         } label: {
                             Text(item.name.capitalized)
                                 .font(.title2)

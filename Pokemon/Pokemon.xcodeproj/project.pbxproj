@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D12E5CF291BB68800F01CE7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D12E5CE291BB68800F01CE7 /* Extension.swift */; };
 		0D12E5D1291BB6BA00F01CE7 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D12E5D0291BB6BA00F01CE7 /* NetworkError.swift */; };
 		0D6EDFD3290D1F3E007296AE /* PokemonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6EDFD2290D1F3E007296AE /* PokemonApp.swift */; };
 		0D6EDFD7290D1F3F007296AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6EDFD6290D1F3F007296AE /* Assets.xcassets */; };
@@ -25,7 +24,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D12E5CE291BB68800F01CE7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0D12E5D0291BB6BA00F01CE7 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		0D6EDFCF290D1F3E007296AE /* Pokemon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokemon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D6EDFD2290D1F3E007296AE /* PokemonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApp.swift; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		0D6EDFD1290D1F3E007296AE /* Pokemon */ = {
 			isa = PBXGroup;
 			children = (
-				0D8B42D1291E763E000F04C4 /* Helpers */,
 				0D90FCB6290FC51C008EA8BD /* Networking */,
 				0D90FCB5290FC513008EA8BD /* ViewModel */,
 				0D90FCB4290FC50E008EA8BD /* Model */,
@@ -99,14 +96,6 @@
 				0D8B42CC291E4517000F04C4 /* WebServiceModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		0D8B42D1291E763E000F04C4 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				0D12E5CE291BB68800F01CE7 /* Extension.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		0D90FCB3290FC4DF008EA8BD /* View */ = {
@@ -222,7 +211,6 @@
 				0DEB61DB2914634A00B7EC5F /* LaunchScreenManager.swift in Sources */,
 				0D90FCB8290FCA9D008EA8BD /* NetworkManager.swift in Sources */,
 				0D90FCBA290FCB55008EA8BD /* PokemonsListModel.swift in Sources */,
-				0D12E5CF291BB68800F01CE7 /* Extension.swift in Sources */,
 				0D90FCC02910651F008EA8BD /* DetailModel.swift in Sources */,
 				0D90FCBE291063FC008EA8BD /* DetailPokemon.swift in Sources */,
 				0D90FCBC290FEFC4008EA8BD /* PokemonListViewModel.swift in Sources */,
