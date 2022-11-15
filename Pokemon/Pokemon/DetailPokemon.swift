@@ -2,14 +2,22 @@ import SwiftUI
 
 struct DetailPokemon: View {
     @ObservedObject var viewModel: DetailViewModel
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     var body: some View {
         ZStack {
-            Image("Bg")
-                .resizable()
-                .ignoresSafeArea(.all)
-            Color.black.opacity(0.2)
-                .ignoresSafeArea(.all)
+            if colorScheme == .dark {
+                Image("Moon")
+                    .resizable()
+                    .ignoresSafeArea(.all)
+            } else {
+                Image("Bg")
+                    .resizable()
+                    .ignoresSafeArea(.all)
+                Color.black.opacity(0.2)
+                    .ignoresSafeArea(.all)
+            }
+
             VStack {
                 Spacer()
                 VStack(alignment: .center) {
