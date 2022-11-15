@@ -1,7 +1,7 @@
 import Foundation
 
 enum NetworkError: Error, LocalizedError {
-    case downloadError
+    case downloadError(Error?)
     case decoding
     case badRequest
     var errorDescription: String? {
@@ -20,3 +20,5 @@ struct ErrorType: Error, Identifiable {
     let id = UUID()
     let error: NetworkError
 }
+
+

@@ -1,22 +1,23 @@
 import Foundation
 
 protocol DataSourceManagerProtocol {
-    func loadData<T: Codable>(
-        page: Int,
-        completionHandler: @escaping (T) -> Void,
-        errorHandler: @escaping (NetworkError) -> Void)
-    func getDetailedPokemon<T: Codable>(
-        url: URL? ,
-        _ completionHandler: @escaping (T) -> Void,
-        errorHandler: @escaping (NetworkError) -> Void)
+    func loadData<T: Codable>(page: Int, completionHandler: @escaping (T) -> Void, errorHandler: @escaping (NetworkError) -> Void)
+    func getDetailedPokemon<T: Codable>(url: URL? , _ completionHandler: @escaping (T) -> Void, errorHandler: @escaping (NetworkError) -> Void)
 }
 
-class NetworkManager: DataSourceManagerProtocol {
+final class NetworkManager: DataSourceManagerProtocol {
+
+    private let session: URLSession
+
+    init(_ session: URLSession = .shared) {
+        self.session = session
+    }
 
     func loadData<T: Codable>(
         page: Int,
         completionHandler: @escaping (T) -> Void,
-        errorHandler: @escaping (NetworkError) -> Void) {
+        errorHandler: @escaping (NetworkError) -> Void
+    ) {
         let offset = page * 20
         let baseURL =  BaseURL.authorization.rawValue
         guard let url = URL(string: baseURL + String(offset) + Path.endPoint.rawValue) else {
@@ -24,25 +25,16 @@ class NetworkManager: DataSourceManagerProtocol {
             return
         }
 
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data,
-            error == nil,
-            let response = response as? HTTPURLResponse,
-            response.statusCode >= 200 && response.statusCode < 300 else {
-                errorHandler(.downloadError)
-                return
-            }
-
-            guard let newPockemon = try? JSONDecoder().decode(T.self, from: data) else {
-                errorHandler(.decoding)
-                return
-
-            }
+        request(url: url) { (result: Result<T, NetworkError>) in
             DispatchQueue.main.async {
-                completionHandler(newPockemon)
+                switch result {
+                    case .success(let success):
+                        completionHandler(success)
+                    case .failure(let failure):
+                        errorHandler(failure)
+                }
             }
         }
-        .resume()
     }
 
     func getDetailedPokemon<T: Codable>(
@@ -51,24 +43,38 @@ class NetworkManager: DataSourceManagerProtocol {
         errorHandler: @escaping (NetworkError) -> Void
     ) {
         guard let detailURL = url else {return}
-        URLSession.shared.dataTask(with: detailURL) { (data, response, error) in
-            guard let data = data,
-            error == nil,
-            let response = response as? HTTPURLResponse,
-            response.statusCode >= 200 && response.statusCode < 300 else {
-                errorHandler(.downloadError)
-                return
-            }
-
-            guard let detailPockemon = try? JSONDecoder().decode(T.self, from: data) else {
-                errorHandler(.decoding)
-                return
-
-            }
+        request(url: detailURL) { (result: Result<T, NetworkError>) in
             DispatchQueue.main.async {
-                completionHandler(detailPockemon)
+                switch result {
+                    case .success(let success):
+                        completionHandler(success)
+                    case .failure(let failure):
+                        errorHandler(failure)
+                }
             }
         }
-        .resume()
+    }
+
+    func request<T: Decodable>(url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(.downloadError(error)))
+                return
+            }
+            guard let data = data else {
+                completion(.failure(.downloadError(nil)))
+                return
+            }
+            if let response = response as? HTTPURLResponse,
+               response.statusCode < 200 && response.statusCode >= 300 {
+                completion(.failure(.downloadError(nil)))
+                return
+            }
+            guard let result = try? JSONDecoder().decode(T.self, from: data) else {
+                completion(.failure(.decoding))
+                return
+            }
+            completion(.success(result))
+        }.resume()
     }
 }
