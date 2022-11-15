@@ -3,22 +3,22 @@ import SwiftUI
 import Combine
 
 final class DetailViewModel: ObservableObject {
-    
+
     @Published var name: String = ""
     @Published var height: String = ""
     @Published var weight: String = ""
     @Published var type: String = ""
     @Published var imageURL: URL?
-    
+
     private let pokemonDetail = CurrentValueSubject<DetailModel?, ErrorType>(nil)
-    
+
     @Published var url: URL
     @Published var isLoading = false
     @Published var appError: ErrorType? = nil
-    
+
     private var pokemonManager : DataSourceManagerProtocol
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(
         url: URL,
         isLoading: Bool = false,
@@ -28,9 +28,10 @@ final class DetailViewModel: ObservableObject {
         self.isLoading = isLoading
         self.pokemonManager = pokemonManager
         getDetails()
+        setupBindings()
     }
-    
-    
+
+
 }
 
 private extension DetailViewModel {
@@ -43,7 +44,7 @@ private extension DetailViewModel {
             self.pokemonDetail.send(completion: .failure(ErrorType(error: .downloadError)))
         }
     }
-    
+
     func setupBindings() {
         pokemonDetail
             .sink { completion in
@@ -62,13 +63,13 @@ private extension DetailViewModel {
                 self.imageURL = detail.pokemonImage
             }
             .store(in: &cancellables)
-        
+
     }
-    
+
     func formatHW(value: Int) -> String {
         let dValue = Double(value)
         let string = String(format: "%.2f", dValue / 10)
-        
+
         return string
     }
 }

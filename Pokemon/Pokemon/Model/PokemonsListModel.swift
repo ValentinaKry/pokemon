@@ -8,7 +8,6 @@ struct PokemonsListModel: Codable {
     }
     let count: Int
     let results: [PokemonModel]
-
 }
 
 struct PokemonPresentationModel {
