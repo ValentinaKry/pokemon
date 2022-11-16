@@ -20,7 +20,7 @@ class PokemonsListViewModel: ObservableObject {
                 PokemonPresentationModel(from: model)
             }
             }, errorHandler: { errorMessage in
-                self.appError = ErrorType(error: .downloadError)
+               self.appError = ErrorType(error: .downloadError(nil))
             }
         )
     }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DetailPokemon: View {
-    @ObservedObject var viewModel: DetailViewModel
+    @StateObject var viewModel: DetailViewModel
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     var body: some View {
@@ -60,7 +60,8 @@ struct DetailPokemon: View {
                         .edgesIgnoringSafeArea(.top)
                 } placeholder: {
                     ProgressView()
-
+                        .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
+                        .scaleEffect(3)
                 }
             }
         }
@@ -77,15 +78,3 @@ struct DetailPokemon_Previews: PreviewProvider {
     }
 }
 
-struct LoadingView: View {
-    var body: some View {
-        ZStack {
-            Image("Bg")
-                .resizable()
-                .ignoresSafeArea(.all)
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
-                .scaleEffect(3)
-        }
-    }
-}

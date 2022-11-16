@@ -13,7 +13,6 @@ final class DetailViewModel: ObservableObject {
     private let pokemonDetail = CurrentValueSubject<DetailModel?, ErrorType>(nil)
 
     @Published var url: URL
-    @Published var isLoading = false
     @Published var appError: ErrorType? = nil
 
     private var pokemonManager : DataSourceManagerProtocol
@@ -21,11 +20,10 @@ final class DetailViewModel: ObservableObject {
 
     init(
         url: URL,
-        isLoading: Bool = false,
+
         pokemonManager: DataSourceManagerProtocol
     ) {
         self.url = url
-        self.isLoading = isLoading
         self.pokemonManager = pokemonManager
         getDetails()
         setupBindings()
@@ -39,7 +37,7 @@ private extension DetailViewModel {
         ) { [weak self] (item: DetailModel) in
             self?.pokemonDetail.send(item)
         } errorHandler: { errorMessage in
-            self.pokemonDetail.send(completion: .failure(ErrorType(error: .downloadError)))
+            self.pokemonDetail.send(completion: .failure(ErrorType(error: .downloadError(nil))))
         }
     }
 
@@ -71,3 +69,5 @@ private extension DetailViewModel {
         return string
     }
 }
+
+
